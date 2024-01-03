@@ -1,16 +1,54 @@
-# This is a sample Python script.
+import pygame
+import sys
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from card import Card
+
+pygame.init()
+
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
+CARD_WIDTH, CARD_HEIGHT = 71, 96
+FPS = 60
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
+def main():
+    # screen
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption("Solitaire")
+
+    clock = pygame.time.Clock()
+
+    dragging = False
+    offset_x, offset_y = 0, 0
+
+    # card
+    my_card = Card(100, 100, CARD_WIDTH, CARD_HEIGHT, BLACK)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if my_card.rect.collidepoint(event.pos):
+                    dragging = True
+                    offset_x = event.pos[0] - my_card.rect.x
+                    offset_y = event.pos[1] - my_card.rect.y
+            elif event.type == pygame.MOUSEBUTTONUP:
+                dragging = False
+
+        if dragging:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            new_x = mouse_x - offset_x
+            new_y = mouse_y - offset_y
+            my_card.rect.topleft = (new_x, new_y)
+
+        screen.fill(WHITE)
+        my_card.draw(screen)
+        pygame.display.flip()
+
+        clock.tick(FPS)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    main()
