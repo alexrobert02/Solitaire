@@ -2,12 +2,14 @@ import pygame
 
 
 class Card:
-    def __init__(self, x, y, width, height, color):
+    def __init__(self, x, y, width, height, color, suite, rank):
         self.rect = pygame.Rect(x, y, width, height)
         self.original_position = (x, y)
         self.color = color
         self.dragging = False
         self.offset_x, self.offset_y = 0, 0
+        self.suite = suite
+        self.rank = rank
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, self.rect)
