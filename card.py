@@ -2,17 +2,24 @@ import pygame
 
 
 class Card:
-    def __init__(self, x, y, width, height, color, suite, rank):
+    def __init__(self, x, y, width, height, suite, rank):
         self.rect = pygame.Rect(x, y, width, height)
         self.original_position = (x, y)
-        self.color = color
+        self.image = pygame.image.load(f'images/{rank.name.lower()}_of_{suite.name.lower()}.png')
+        self.image = pygame.transform.smoothscale(self.image, (width, height))
+        self.back_image = pygame.image.load("images/back_card.png")
+        self.back_image = pygame.transform.smoothscale(self.back_image, (width, height))
         self.dragging = False
         self.offset_x, self.offset_y = 0, 0
         self.suite = suite
         self.rank = rank
+        self.face_up = False
 
     def draw(self, screen):
-        pygame.draw.rect(screen, self.color, self.rect)
+        screen.blit(self.back_image, self.rect)
+
+    def draw_front(self, screen):
+        screen.blit(self.image, self.rect)
 
     def start_dragging(self, mouse_pos):
         self.dragging = True

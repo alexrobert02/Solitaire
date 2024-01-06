@@ -20,7 +20,7 @@ class Slot:
             card.rect.topleft = (self.rect.left, self.rect.top)
 
     def place_card(self, card):
-        print("card is placed on a pile")
+        # print("card is placed on a pile")
         self.pile.append(card)
         card.rect.topleft = self.rect.topleft
         card.set_original_position(self.rect.topleft)
@@ -29,21 +29,21 @@ class Slot:
         self.pile.remove(card)
 
     def remove_pile(self, pile):
-        print("pile is removed")
+        # print("pile is removed")
         for i, card in enumerate(pile):
             card.stop_dragging()
-            print("height removed")
+            # print("height removed")
             self.pile.remove(card)
             if len(self.pile) != 0 and self.rect.height < self.original_height:
                 self.rect.height -= 20
 
     def place_pile(self, pile):
-        print("pile is placed")
+        # print("pile is placed")
         for i, card in enumerate(pile):
             card.stop_dragging()
             card.rect.topleft = (self.rect.left, self.rect.top)
             card.slot = self
-            print("height added")
+            # print("height added")
             if len(self.pile) != 0:
                 self.rect.height += 20
             self.pile.append(card)
@@ -60,3 +60,9 @@ class Slot:
             new_y = pos[1]
             new_pos = (new_x, new_y)
             card.start_dragging(new_pos)
+
+    def get_top_card(self):
+        return self.pile[-1]
+
+    def is_empty(self):
+        return len(self.pile) == 0
