@@ -6,7 +6,6 @@ def main():
     game.create_slots()
     game.create_card_deck()
     game.deal_cards()
-
     game.run()
 
 
