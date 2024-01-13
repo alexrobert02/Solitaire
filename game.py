@@ -112,7 +112,7 @@ class Game:
             x += 125
 
         x = 100
-        for i in range(5):
+        for i in range(7):
             self.tableau.append(Slot(x, 300, CARD_WIDTH, CARD_HEIGHT, WHITE, BORDER_WIDTH))
             x += 125
 
@@ -266,12 +266,11 @@ class Game:
 
     def run(self):
         while True:
+            self.draw_game()
+            self.handle_events()
+
             if self.check_win():
                 self.draw_win_screen()
-
-            self.draw_game()
-
-            self.handle_events()
 
             pygame.display.flip()
             self.clock.tick(FPS)
