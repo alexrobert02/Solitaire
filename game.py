@@ -15,16 +15,12 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 
-def check_foundations_rules(card, slot):
+def check_foundations_rules(card: Card, slot: Slot):
     """
     Check if the provided card can be placed on the foundations slot based on Solitaire rules.
-
-    Parameters:
-    - card: Card object to be checked.
-    - slot: Slot object representing the foundations slot.
-
-    Returns:
-    - True if the card can be placed on the slot, False otherwise.
+    :param card: Card object to be checked.
+    :param slot: Slot object representing the foundations slot.
+    :return: true if the card can be placed on the slot, false otherwise.
     """
     if slot.is_empty():
         return card.rank.name == "Ace"
@@ -32,16 +28,12 @@ def check_foundations_rules(card, slot):
     return card.suite.name == top_card.suite.name and card.rank.value - top_card.rank.value == 1
 
 
-def check_tableau_rules(card, slot):
+def check_tableau_rules(card: Card, slot: Slot):
     """
     Check if the provided card can be placed on the tableau slot based on Solitaire rules.
-
-    Parameters:
-    - card: Card object to be checked.
-    - slot: Slot object representing the tableau slot.
-
-    Returns:
-    - True if the card can be placed on the slot, False otherwise.
+    :param card: Card object to be checked.
+    :param slot: Slot object representing the tableau slot.
+    :return: true if the card can be placed on the slot, false otherwise.
     """
     if slot.is_empty():
         return card.rank.name == "King"
@@ -54,21 +46,34 @@ def check_tableau_rules(card, slot):
 
 
 class Game:
+    """
+    Game object for a Solitaire game.
+    Attributes
+    ----------
+    screen : pygame.Surface
+        Pygame surface object representing the screen for rendering.
+    clock : pygame.time.Clock
+        Pygame clock object for controlling the frame rate.
+    pile : list of Card
+        List to store the initial card deck.
+    stock : Slot
+        Slot object representing the stock pile.
+    waste : Slot
+        Slot object representing the waste pile.
+    foundations : list of Slot
+        List of Slot objects representing the foundation piles.
+    tableau : list of Slot
+        List of Slot objects representing the tableau piles.
+    slots : list of Slot
+        Combined list of all game slots.
+    new_game_rect : pygame.Rect
+        Pygame rect object representing the new game button's position and size.
+    victory_rect : pygame.Rect
+        Pygame rect object representing the victory screen's position and size.
+    """
     def __init__(self):
         """
         Initialize a Game object representing a Solitaire game.
-
-        Attributes:
-        - screen: Pygame screen object for rendering.
-        - clock: Pygame clock object for controlling the frame rate.
-        - pile: List to store the initial card deck.
-        - stock: Slot object representing the stock pile.
-        - waste: Slot object representing the waste pile.
-        - foundations: List of Slot objects representing the foundation piles.
-        - tableau: List of Slot objects representing the tableau piles.
-        - slots: Combined list of all game slots.
-        - new_game_rect: Pygame Rect object representing the new game button's position and size.
-        - victory_rect: Pygame Rect object representing the victory screen's position and size.
         """
         pygame.init()
         pygame.display.set_caption("Solitaire")
@@ -99,9 +104,6 @@ class Game:
 
         All slots have dimensions defined by CARD_WIDTH and CARD_HEIGHT,
         color defined by WHITE, and border width defined by BORDER_WIDTH.
-
-        Returns:
-            None
         """
         self.stock = Slot(100, 100, CARD_WIDTH, CARD_HEIGHT, WHITE, BORDER_WIDTH)
         self.waste = Slot(225, 100, CARD_WIDTH, CARD_HEIGHT, WHITE, BORDER_WIDTH)
@@ -199,9 +201,6 @@ class Game:
 
         Each card is created with a position of (100, 100), dimensions defined by CARD_WIDTH and CARD_HEIGHT,
         and the corresponding suite and rank.
-
-        Returns:
-            None
         """
         suites = [
             Suite("hearts", "RED"),
@@ -238,9 +237,6 @@ class Game:
         Each tableau slot receives one card more than the previous slot in each round until all slots have cards.
 
         The remaining cards are placed in the stock. The top card of each tableau slot is then turned face up.
-
-        Returns:
-            None
         """
         random.shuffle(self.pile)
 
@@ -265,6 +261,9 @@ class Game:
             slot.get_top_card().turn_face_up(self.screen)
 
     def run(self):
+        """
+        Run the main game loop.
+        """
         while True:
             self.draw_game()
             self.handle_events()
@@ -278,9 +277,7 @@ class Game:
     def check_win(self):
         """
         Check if the player has won the game by completing the foundations.
-
-        Returns:
-        - True if the player has won, False otherwise.
+        :return: true if the player has won by completing the foundations, false otherwise.
         """
         cards_num = 0
         for slot in self.slots[2:6]:
@@ -294,9 +291,6 @@ class Game:
         Restart the game by resetting slots, creating a new card deck, and dealing cards.
 
         This method resets the game state, creating a new card deck, shuffling, and dealing cards to the tableau slots.
-
-        Returns:
-            None
         """
         self.pile = []
         self.stock = None
@@ -316,9 +310,6 @@ class Game:
         This method draws a victory screen with a black rectangle filled with white border.
         It then renders the text 'VICTORY' in white and blits it to the screen at the center of the victory rectangle.
         The screen is updated and a delay of 3000 milliseconds is introduced before the game is restarted.
-
-        Returns:
-            None
         """
         pygame.draw.rect(self.screen, BLACK, self.victory_rect)
         pygame.draw.rect(self.screen, WHITE, self.victory_rect, BORDER_WIDTH)
@@ -340,9 +331,6 @@ class Game:
         It also handles the dragging of cards by updating their positions based on the mouse position.
         It then draws the cards in the slots, with special handling for cards that are being dragged.
         Finally, it draws the 'New Game' button on the screen.
-
-        Returns:
-            None
         """
         self.screen.fill(BLACK)
 

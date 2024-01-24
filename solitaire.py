@@ -3,13 +3,10 @@ from game import Game
 
 def main():
     """
-    Main function to run the game.
+    Main function to run Solitaire.
 
-    This function creates an instance of the Game class, initializes the game slots and card deck,
+    It creates an instance of the Game class, initializes the game slots and card deck,
     deals the cards, and then runs the game.
-
-    Returns:
-        None
     """
     game = Game()
     game.create_slots()
