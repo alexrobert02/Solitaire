@@ -1,7 +1,5 @@
 # Game of solitaire
 
-Se va crea o interfață grafică minimală ce va oferi utilizatorului posibilitatea de a juca Solitaire.
+This is a Python-based implementation of the classic card game. The goal of the game is to sort all the cards into four piles based on suit and in ascending order, from Ace to King.
 
-**INPUT**: solitaire.py
-
-**OUTPUT**: Interfața grafică ce afișează cărțile de joc. După terminarea jocului, se va afișa un mesaj corespunzător.
+![Image](https://github.com/user-attachments/assets/49651d87-24a5-4bf2-89c2-07fdf58e9d86)
